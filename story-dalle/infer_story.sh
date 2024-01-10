@@ -38,4 +38,5 @@ python ./infer_t2i.py \
 --do_eval \
 --per_gpu_eval_batch_size 16 \
 --output_dir $OUTPUT_ROOT \
---mode $2
+--mode test \
+--background

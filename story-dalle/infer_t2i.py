@@ -38,6 +38,8 @@ torch.set_grad_enabled(False)
 def get_dataset(args, tokenizer, preprocess: transforms, mode = 'train'):
     if args.dataset_name == 'mscoco':
         import mscoco_dataloader as data
+    elif args.dataset_name == 'pororo' and args.background:
+        import pororo_bg_dataloader as data
     elif args.dataset_name == 'pororo':
         import pororo_dataloader as data
     elif args.dataset_name == 'flintstones':
@@ -390,6 +392,7 @@ if __name__ == '__main__':
         action="store_true",
         help="Whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit",
     )
+    parser.add_argument("--background", action="store_true", help="Add background prompt to captions")
 
     args = parser.parse_args()
 
