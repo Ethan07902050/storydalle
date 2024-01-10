@@ -1,8 +1,8 @@
 if [ "$1" = "pororo" ]; then
   echo "Evaluating on Pororo"
-  DATA_DIR=../data/pororo
+  DATA_DIR=../data/pororo_png
   OUTPUT_ROOT=../out/pororo
-  MODEL_CKPT=''
+  MODEL_CKPT='../ckpt/pororo/25_v1.pth'
   SENT_EMBED=512
   STORY_LEN=4
 elif [ "$1" = "flintstones" ]; then

@@ -93,7 +93,7 @@ class StoryImageDataset(torch.utils.data.Dataset):
         # image = Image.open(os.path.join(self.out_dir, 'img-' + str(item) + '.png')).convert('RGB')
 
         captions = []
-        for tgt_img_id, prompt in zip(tgt_img_ids, self.background_prompts[src_img_id]):
+        for tgt_img_id, prompt in zip(tgt_img_ids, self.background_prompts[str(src_img_id)]):
             caption = self.descriptions_original[tgt_img_id][0] + ' ' + prompt
             captions.append(caption)
 
