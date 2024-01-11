@@ -7,11 +7,11 @@ import numpy as np
 import PIL
 
 def save_as_image(tensor, out_dir, suffix):
-    img = vutils.make_grid(tensor, video_len=1, padding=0)
+    img = vutils.make_grid(tensor, nrow=1, padding=0)
     save_image(img, '%s/gen_sample_%s.png' % (out_dir, suffix))
 
 def acc_tensors_to_images(tensor_dir, key, out_dir):
-
+    os.makedirs(out_dir, exist_ok=True)
     files = [f for f in os.listdir(tensor_dir) if f.endswith('pt') and key in f]
     sorted_files = sorted(files, key=lambda x: int(x[:-3].split('_')[-1]))
     print(files[:10])
@@ -25,11 +25,11 @@ def acc_tensors_to_images(tensor_dir, key, out_dir):
     all_tensors = torch.cat(all_tensors, dim=0)
     print(all_tensors.shape)
 
-    torch.save(all_tensors, os.path.join(tensor_dir, 'sdalle_story_%s.pt' % key))
+    # torch.save(all_tensors, os.path.join(tensor_dir, 'sdalle_story_%s.pt' % key))
 
-    # for i in tqdm(range(0, all_tensors.shape[0]), desc='Preapring images'):
-    #     for j in range(0, all_tensors.shape[1]):
-    #         save_as_image(all_tensors[i, j], out_dir, '%s_%s' % (i, j))
+    for i in tqdm(range(0, all_tensors.shape[0]), desc='Preparing images'):
+        for j in range(0, all_tensors.shape[1]):
+            save_as_image(all_tensors[i, j], out_dir, '%s_%s' % (i, j))
 
 def images_to_numpy(tensor):
     generated = tensor.data.cpu().numpy().transpose(1, 2, 0)
@@ -65,7 +65,7 @@ def numpy_to_img(numpy_file, outdir, img_size):
 
 if __name__ == "__main__":
 
-    acc_tensors_to_images('/nas-ssd/adyasha/out/minDALLEs/pororo/', 'test', '/nas-ssd/adyasha/out/minDALLEs/pororo/test_images')
+    acc_tensors_to_images('/work/u1509343/storydalle/out/pororo', 'test', '/work/u1509343/storydalle/out/pororo/test_images')
     # acc_tensors_to_images('/nas-ssd/adyasha/out/minDALLEs/didemo/', 'test', '/nas-ssd/adyasha/out/minDALLEs/didemo/test_images/images')
     # acc_tensors_to_images('/nas-ssd/adyasha/out/minDALLEs/flintstones/', 'test', '/nas-ssd/adyasha/out/minDALLEs/flintstones/test_images/images')
 
