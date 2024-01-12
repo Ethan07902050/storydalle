@@ -1,7 +1,7 @@
 if [ "$1" = "pororo" ]; then
   echo "Training on Pororo"
   DATA_DIR=../data/pororo_png
-  OUTPUT_ROOT=./out/pororo/train
+  OUTPUT_ROOT=./out/pororo/llava
   SENT_EMBED=512
   STORY_LEN=4
   LR=1e-4
@@ -26,7 +26,7 @@ elif [ "$1" = "didemo" ]; then
   GRAD_ACC=8
 fi
 
-LOG_DIR=../runs/
+LOG_DIR=../runs/llava
 
 python ./train_t2i.py \
 --prefix_model_name_or_path './1.3B/' \
@@ -49,5 +49,6 @@ python ./train_t2i.py \
 --learning_rate $LR \
 --logging_steps 50 \
 --eval_steps 500 \
---generate_steps 1000
+--generate_steps 1000 \
+--background
 

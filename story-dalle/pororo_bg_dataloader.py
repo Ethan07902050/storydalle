@@ -57,7 +57,7 @@ class StoryImageDataset(torch.utils.data.Dataset):
         else:
             raise ValueError
 
-        with open(os.path.join(img_folder, 'background-prompt.json')) as f:
+        with open(os.path.join(img_folder, f'background_prompt_{mode}.json')) as f:
             self.background_prompts = json.load(f)
 
         self.preprocess = preprocess
