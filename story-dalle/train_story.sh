@@ -1,7 +1,7 @@
 if [ "$1" = "pororo" ]; then
   echo "Training on Pororo"
-  DATA_DIR=../data/pororo/
-  OUTPUT_ROOT=./out/pororo
+  DATA_DIR=../data/pororo_png
+  OUTPUT_ROOT=./out/pororo/train
   SENT_EMBED=512
   STORY_LEN=4
   LR=1e-4

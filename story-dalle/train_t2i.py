@@ -21,7 +21,8 @@ using a masked language modeling (MLM) loss. XLNet is fine-tuned using a permuta
 
 import logging
 import os, torch
-from dalle.models import PrefixTuningDalle, Dalle, PromptDalle, StoryDalle
+# from dalle.models import PrefixTuningDalle, Dalle, PromptDalle, StoryDalle
+from dalle.models import Dalle, PromptDalle, StoryDalle
 import torchvision
 import torchvision.transforms as transforms
 import pytorch_lightning as pl
