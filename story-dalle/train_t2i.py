@@ -235,23 +235,24 @@ def main(args):
 
     #############################################################
     # Add character names to tokenizer dictionary and resize token embeddings
-    if args.dataset_name == 'mscoco':
-        pass
-    elif args.dataset_name == 'pororo':
-        n_new_tokens = 9
-        with torch.no_grad():
-            model.stage2.resize_token_embeddings(model.stage2.tok_emb_txt.weight.shape[0] + n_new_tokens)
-            model.tokenizer.add_tokens(['pororo', 'loopy', 'eddy', 'harry', 'poby', 'tongtong', 'crong', 'rody', 'petty'])
-    elif args.dataset_name == 'flintstones':
-        n_new_tokens = 7
-        with torch.no_grad():
-            model.stage2.resize_token_embeddings(model.stage2.tok_emb_txt.weight.shape[0] + n_new_tokens)
-            model.tokenizer.add_tokens(
-                ['fred', 'barney', 'wilma', 'betty', 'pebbles', 'dino', 'slate'])
-    elif args.dataset_name == 'didemo':
-        pass
-    else:
-        raise ValueError
+    if not args.model_name_or_path:
+        if args.dataset_name == 'mscoco':
+            pass
+        elif args.dataset_name == 'pororo':
+            n_new_tokens = 9
+            with torch.no_grad():
+                model.stage2.resize_token_embeddings(model.stage2.tok_emb_txt.weight.shape[0] + n_new_tokens)
+                model.tokenizer.add_tokens(['pororo', 'loopy', 'eddy', 'harry', 'poby', 'tongtong', 'crong', 'rody', 'petty'])
+        elif args.dataset_name == 'flintstones':
+            n_new_tokens = 7
+            with torch.no_grad():
+                model.stage2.resize_token_embeddings(model.stage2.tok_emb_txt.weight.shape[0] + n_new_tokens)
+                model.tokenizer.add_tokens(
+                    ['fred', 'barney', 'wilma', 'betty', 'pebbles', 'dino', 'slate'])
+        elif args.dataset_name == 'didemo':
+            pass
+        else:
+            raise ValueError
 
     ##############################################################
     #################LOADING DATASETS ###########################
