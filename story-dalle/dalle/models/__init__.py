@@ -961,11 +961,11 @@ class StoryDalle(Dalle):
             try:
                 model.load_state_dict(torch.load(args.model_name_or_path)['state_dict'])
             except KeyError:
-                state_dict = torch.load(args.model_name_or_path)['model_state_dict']
-                state_dict['stage2.tok_emb_txt.weight'] = state_dict['stage2.tok_emb_txt.weight'][:config_update.stage2.vocab_size_txt, :]
-                state_dict['stage2.head_txt.weight'] = state_dict['stage2.head_txt.weight'][:config_update.stage2.vocab_size_txt, :]
-                model.load_state_dict(state_dict)
-                # model.load_state_dict(torch.load(args.model_name_or_path)['model_state_dict'])
+                # state_dict = torch.load(args.model_name_or_path)['model_state_dict']
+                # state_dict['stage2.tok_emb_txt.weight'] = state_dict['stage2.tok_emb_txt.weight'][:config_update.stage2.vocab_size_txt, :]
+                # state_dict['stage2.head_txt.weight'] = state_dict['stage2.head_txt.weight'][:config_update.stage2.vocab_size_txt, :]
+                # model.load_state_dict(state_dict)
+                model.load_state_dict(torch.load(args.model_name_or_path)['model_state_dict'])
         else:
             model = cls(config_update)
             print(model.cross_attention_idxs)

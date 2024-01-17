@@ -14,10 +14,10 @@ def acc_tensors_to_images(tensor_dir, key, out_dir):
     os.makedirs(out_dir, exist_ok=True)
     files = [f for f in os.listdir(tensor_dir) if f.endswith('pt') and key in f]
     sorted_files = sorted(files, key=lambda x: int(x[:-3].split('_')[-1]))
-    print(files[:10])
-    print(sorted_files[:20])
+    # print(files)
+    # print(sorted_files)
     all_tensors = []
-    for f in tqdm(files, desc="eading tensors"):
+    for f in tqdm(sorted_files, desc="eading tensors"):
         t = torch.load(os.path.join(tensor_dir, f))
         # print(t[0].shape)
         # print(t.shape)
@@ -65,7 +65,11 @@ def numpy_to_img(numpy_file, outdir, img_size):
 
 if __name__ == "__main__":
 
-    acc_tensors_to_images('/work/u1509343/storydalle/out/pororo', 'test', '/work/u1509343/storydalle/out/pororo/test_images')
+    acc_tensors_to_images(
+        '/work/u1509343/storydalle/out/pororo/train-4-epoch', 
+        'test', 
+        '/work/u1509343/storydalle/out/pororo/train-4-epoch/test_images'
+    )
     # acc_tensors_to_images('/nas-ssd/adyasha/out/minDALLEs/didemo/', 'test', '/nas-ssd/adyasha/out/minDALLEs/didemo/test_images/images')
     # acc_tensors_to_images('/nas-ssd/adyasha/out/minDALLEs/flintstones/', 'test', '/nas-ssd/adyasha/out/minDALLEs/flintstones/test_images/images')
 

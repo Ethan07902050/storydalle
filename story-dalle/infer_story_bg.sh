@@ -1,8 +1,8 @@
 if [ "$1" = "pororo" ]; then
   echo "Evaluating on Pororo"
   DATA_DIR=../data/pororo_png
-  OUTPUT_ROOT=../out/pororo/train-4-epoch
-  MODEL_CKPT='./out/pororo/train/Model/4.pth'
+  OUTPUT_ROOT=../out/pororo/llava-19-epoch-llama
+  MODEL_CKPT='./out/pororo/llava/Model/19.pth'
   SENT_EMBED=512
   STORY_LEN=4
 elif [ "$1" = "flintstones" ]; then
@@ -37,4 +37,5 @@ python ./infer_t2i.py \
 --do_eval \
 --per_gpu_eval_batch_size 16 \
 --output_dir $OUTPUT_ROOT \
---mode test
+--mode test \
+--background

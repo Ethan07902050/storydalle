@@ -57,7 +57,7 @@ class StoryImageDataset(torch.utils.data.Dataset):
         else:
             raise ValueError
 
-        with open(os.path.join(img_folder, f'background_prompt_{mode}.json')) as f:
+        with open(os.path.join(img_folder, f'background_llama_{mode}.json')) as f:
             self.background_prompts = json.load(f)
 
         self.preprocess = preprocess
@@ -92,8 +92,14 @@ class StoryImageDataset(torch.utils.data.Dataset):
             tgt_images = [self.preprocess(self.sample_image(Image.open(os.path.join(self.img_folder, tgt_img_path)).convert('RGB'))) for tgt_img_path in tgt_img_paths]
         # image = Image.open(os.path.join(self.out_dir, 'img-' + str(item) + '.png')).convert('RGB')
 
+        # sometimes llama does not generate exactly 4 background descriptions
+        prompts = self.background_prompts[str(src_img_id)]
+        l = len(prompts)
+        if l != self.video_len:
+            prompts += [prompts[-1]] * (self.video_len - l) 
+
         captions = []
-        for tgt_img_id, prompt in zip(tgt_img_ids, self.background_prompts[str(src_img_id)]):
+        for tgt_img_id, prompt in zip(tgt_img_ids, prompts):
             caption = self.descriptions_original[tgt_img_id][0] + ' ' + prompt
             captions.append(caption)
 

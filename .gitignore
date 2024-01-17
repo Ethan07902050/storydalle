@@ -4,3 +4,4 @@ data
 ckpt
 __pycache__
 story-dalle/1.3B
+*/wandb

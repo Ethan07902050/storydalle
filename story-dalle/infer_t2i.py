@@ -76,7 +76,7 @@ def inverse_normalize(tensor, mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)):
 
 
 def save_story_results(images, texts, image_dir, epoch,
-                       mode='val', dataset = 'flint',
+                       mode='val', dataset = 'flint', 
                        ground_truth=None, video_len=4, source=None):
     # print("Generated Images shape: ", images.shape)
 
@@ -192,6 +192,7 @@ def main(args):
     gts = []
     debug = False
     args.n_gpus = torch.cuda.device_count()
+    os.makedirs(args.output_dir)
     # idxs = random.sample(list(range(len(eval_dataset))), k=10)
     for idx, batch in tqdm(enumerate(eval_loader)):
 
@@ -223,15 +224,20 @@ def main(args):
                     prompt = model.get_prompt(bsz=texts.shape[1]).to(device)
                 else:
                     prompt = None
-                print(batch[0].shape[0])
-                for i in range(texts.shape[0]):
-                    print(i)
-                    # pixels = model.sampling(texts[i].to(device),
-                    # src_images[i].unsqueeze(0).to(device),
-                    # sent_embeds[i].unsqueeze(0).to(device),
-                    # top_k=32, top_p=0.2, prompt=prompt).cpu() # for pororo arxiv, k=32, p=0.2; for pororo/flintstones/didemo camera-ready, k=256
+
+                for i in range(texts.shape[0]):  
+                    if args.dataset_name == 'pororo':                 
+                        pixels = model.sampling(
+                            texts[i].to(device),
+                            src_images[i].unsqueeze(0).to(device),
+                            sent_embeds[i].unsqueeze(0).to(device),
+                            top_k=32, 
+                            top_p=0.2, 
+                            prompt=prompt
+                        ).cpu() # for pororo arxiv, k=32, p=0.2; for pororo/flintstones/didemo camera-ready, k=256
+                    elif args.dataset_name == 'flintstones':
+                        pixels = model.sampling(texts[i].to(device), src_images[i].unsqueeze(0).to(device), sent_embeds[i].unsqueeze(0).to(device), top_k=96, top_p=0.5, prompt=prompt).cpu() # flintstones arxiv
                     # pixels = model.sampling(texts[i].to(device), src_images[i].unsqueeze(0).to(device), sent_embeds[i].unsqueeze(0).to(device), top_k=96, top_p=0.5, prompt=prompt).cpu() # flintstones arxiv
-                    pixels = model.sampling(texts[i].to(device), src_images[i].unsqueeze(0).to(device), sent_embeds[i].unsqueeze(0).to(device), top_k=96, top_p=0.5, prompt=prompt).cpu() # flintstones arxiv
                     # print(pixels.shape)
                     stories.append(pixels)
 
